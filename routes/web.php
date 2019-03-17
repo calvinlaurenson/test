@@ -14,3 +14,15 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+$router->group(['prefix' => 'api'], function () use ($router) {
+
+  $router->get('categories/{amount}', ['uses' => 'CategoriesController@categories']);
+
+  $router->get('adverts/{amount}', ['amount' => 'AdvertsController@index']);
+
+  $router->get('accounts/{user_id}', ['uses' => 'AccountsController@accounts']);
+
+  $router->get('user_adverts/{user_id}/{all}', ['uses' => 'AdvertsController@usersAdverts']);
+});
