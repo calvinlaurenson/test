@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
-class AdvertsController extends Controller
+class AccountsController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -19,7 +21,11 @@ class AdvertsController extends Controller
     }
 
     public function accounts($user_id = null) {
-        
+        $data = DB::table('users')
+                ->where('id', $user_id)
+                ->get();
+
+        return response()->json($data);
     }
 
     //

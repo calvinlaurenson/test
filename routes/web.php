@@ -18,11 +18,11 @@ $router->get('/', function () use ($router) {
 
 $router->group(['prefix' => 'api'], function () use ($router) {
 
-  $router->get('categories/{amount}', ['uses' => 'CategoriesController@categories']);
+  $router->get('categories/{amount}', ['uses' => 'CategoriesController@index']);
 
   $router->get('adverts/{amount}', ['amount' => 'AdvertsController@index']);
 
   $router->get('accounts/{user_id}', ['uses' => 'AccountsController@accounts']);
 
-  $router->get('user_adverts/{user_id}/{all}', ['uses' => 'AdvertsController@usersAdverts']);
+  $router->get('user_adverts/{user_id}/{latest}', ['uses' => 'AdvertsController@usersAdverts']);
 });
