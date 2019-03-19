@@ -60,10 +60,6 @@ class Authenticate
         ->where('api_key', $api_key)
         ->increment('total_calls_per_minute', 1, ['last_call' => time()]);
 
-
-
-
-
         return $next($request);
     }
 }
