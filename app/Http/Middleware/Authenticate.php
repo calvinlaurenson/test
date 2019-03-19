@@ -60,6 +60,12 @@ class Authenticate
         ->where('api_key', $api_key)
         ->increment('total_calls_per_minute', 1, ['last_call' => time()]);
 
+        $call_id = str_random(8);
+        DB::table('call_log')
+        ->insert(
+            ['inputs' => json_encode($_GET),'api_id' => $api_check->id, 'call_id' => $call_id]
+            );
+
         return $next($request);
     }
 }
