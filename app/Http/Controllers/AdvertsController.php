@@ -31,15 +31,20 @@ class AdvertsController extends Controller
     *
     * api/adverts/{amount}
     */
-    public function index(Request $request, $amount = 1) {
+    public function index(Request $request, $amount = 0) {
         $status = false;
         $msg = "Request failed";
         $code = 0;
         $call_id = $request->get('call_id');
 
-        $data = DB::table('adverts')
-        ->limit($amount)
-        ->get();
+        if($amount == 0) {
+            $data = DB::table('adverts')
+            ->get();
+        } else {
+            $data = DB::table('adverts')
+            ->limit($amount)
+            ->get();
+        }
         
         if(!empty($data)) {
             $status = true;
