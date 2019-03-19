@@ -5,6 +5,7 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Http\Request;
 
 class Authenticate
 {
@@ -42,29 +43,36 @@ class Authenticate
             return response('Unknown API key.', 401);
         }
 
+
         $api_check = DB::table('api_keys')
             ->where('api_key', $api_key)
+            ->where('active', 1)
             ->first();
 
-        if($api_check->total_calls_per_minute >= $api_check->calls_per_minute && (($api_check->last_call+60) >= time())) {
+        if($api_check == null) {
+            return response('Incorrect API Key', 401);
+        }
+
+        if($api_check->total_calls_per_minute >= $api_check->calls_per_minute && (($api_check->time_of_last_call+60) >= time())) {
             return response('Max calls made. Try again soon', 401);
         }
 
-        if(($api_check->last_call+60) <= time()) {
+        if(($api_check->time_of_last_call+60) <= time()) {
             DB::table('api_keys')
             ->where('api_key', $api_key)
             ->update(['total_calls_per_minute' => 0]);
         }
 
+        $params = $request->route()[2];
+
         DB::table('api_keys')
         ->where('api_key', $api_key)
-        ->increment('total_calls_per_minute', 1, ['last_call' => time()]);
+        ->increment('total_calls_per_minute', 1, ['time_of_last_call' => time()]);
 
         $call_id = str_random(8);
+        $request->attributes->add(['call_id' => $call_id]);
         DB::table('call_log')
-        ->insert(
-            ['inputs' => json_encode($_GET),'api_id' => $api_check->id, 'call_id' => $call_id]
-            );
+        ->insert(['inputs' => json_encode($params),'api_id' => $api_check->id, 'call_id' => $call_id]);
 
         return $next($request);
     }

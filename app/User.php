@@ -18,7 +18,7 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
      * @var array
      */
     protected $fillable = [
-        'api_key', 'name', 'active', 'calls_per_minute', 'last_call', 'time_since_last_call', 'total_calls_per_minute'
+        'api_key', 'name', 'active', 'calls_per_minute', 'time_of_last_call', 'total_calls_per_minute'
     ];
 
     /**
