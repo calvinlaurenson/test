@@ -13,7 +13,7 @@ class AccountsController extends Controller
      */
     public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     public function index() {
@@ -21,6 +21,7 @@ class AccountsController extends Controller
     }
 
     public function accounts($user_id = null) {
+
         $data = DB::table('users')
                 ->where('id', $user_id)
                 ->get();

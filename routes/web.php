@@ -20,7 +20,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 
   $router->get('categories/{amount}', ['uses' => 'CategoriesController@index']);
 
-  $router->get('adverts/{amount}', ['amount' => 'AdvertsController@index']);
+  $router->get('adverts/{amount}', ['uses' => 'AdvertsController@index']);
 
   $router->get('accounts/{user_id}', ['uses' => 'AccountsController@accounts']);
 

@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Contracts\Auth\Factory as Auth;
+use Illuminate\Support\Facades\DB;
 
 class Authenticate
 {
@@ -35,9 +36,33 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Unauthorized.', 401);
+        $api_key = $request->header('api_token');
+
+        if (!$api_key) {
+            return response('Unknown API key.', 401);
         }
+
+        $api_check = DB::table('api_keys')
+            ->where('api_key', $api_key)
+            ->first();
+
+        if($api_check->total_calls_per_minute >= $api_check->calls_per_minute && (($api_check->last_call+60) >= time())) {
+            return response('Max calls made. Try again soon', 401);
+        }
+
+        if(($api_check->last_call+60) <= time()) {
+            DB::table('api_keys')
+            ->where('api_key', $api_key)
+            ->update(['total_calls_per_minute' => 0]);
+        }
+
+        DB::table('api_keys')
+        ->where('api_key', $api_key)
+        ->increment('total_calls_per_minute', 1, ['last_call' => time()]);
+
+
+
+
 
         return $next($request);
     }
