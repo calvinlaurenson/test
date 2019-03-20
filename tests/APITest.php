@@ -20,31 +20,29 @@ class APITest extends TestCase
     /** @test */
     public function getAllAdverts()
     {
-        $params = ["amount" => 2];
-        $response = $this->call('get', 'adverts/index/1', $params);
-        $this->assertEquals(200, $response->status());
-
-         $this->seeJsonStructure([
-            'outcome' => 
-            [
-                'status',
-                'message',
-                'call_id',
-                'code'
-            ],
+        $header = ['api_token' => '567ugfh6'];
+        $response = $this->json('GET', '/api/adverts/1', [], $header);
+        $this->seeJsonStructure([
+            'outcome' =>
+                [
+                    'status',
+                    'message',
+                    'call_id',
+                    'code'
+                ],
             'data' => [
                 '*' => [
                     'id',
                     'title',
+                    'description',
                     'price',
                     'category',
                     'user_id',
                     'created_at',
                     'updated_at'
-                ],
+                ]
             ]
         ]);
-       
 
     }
 
@@ -52,94 +50,53 @@ class APITest extends TestCase
     /** @test */
     public function getAllCategories()
     {
-        $params = ["amount" => 2];
-        $response = $this->call('get', 'categories/2');
-        $this->assertEquals(200, $response->status());
-
-         $this->seeJsonStructure([
-            'outcome' => 
-            [
-                'status',
-                'message',
-                'call_id',
-                'code'
-            ],
+        $header = ['api_token' => '567ugfh6'];
+        $response = $this->json('GET', '/api/categories/1', [], $header);
+        $this->seeJsonStructure([
+            'outcome' =>
+                [
+                    'status',
+                    'message',
+                    'call_id',
+                    'code'
+                ],
             'data' => [
                 '*' => [
                     'id',
-                    'title',
-                    'price',
-                    'category',
-                    'user_id',
+                    'name',
                     'created_at',
                     'updated_at'
-                ],
+                ]
             ]
         ]);
-       
 
     }
 
     /** @test */
     public function getAccount()
     {
-        $params = ["user_id" => 2];
-        $response = $this->call('get', 'accounts/2');
-        $this->assertEquals(200, $response->status());
-
-         $this->seeJsonStructure([
-            'outcome' => 
-            [
-                'status',
-                'message',
-                'call_id',
-                'code'
-            ],
+        $header = ['api_token' => '567ugfh6'];
+        $response = $this->json('GET', '/api/accounts/1', [], $header);
+        $this->seeJsonStructure([
+            'outcome' =>
+                [
+                    'status',
+                    'message',
+                    'call_id',
+                    'code'
+                ],
             'data' => [
                 '*' => [
                     'id',
-                    'title',
-                    'price',
-                    'category',
-                    'user_id',
+                    'username',
+                    'email',
                     'created_at',
                     'updated_at'
-                ],
+                ]
             ]
         ]);
-       
-
     }
 
-    /** @test */
-    public function getAccountAdverts()
-    {
-        $params = ["user_id" => 2, "latest" => true];
-        $response = $this->call('get', 'user_adverts/2/true');
-        $this->assertEquals(200, $response->status());
-
-         $this->seeJsonStructure([
-            'outcome' => 
-            [
-                'status',
-                'message',
-                'call_id',
-                'code'
-            ],
-            'data' => [
-                '*' => [
-                    'id',
-                    'title',
-                    'price',
-                    'category',
-                    'user_id',
-                    'created_at',
-                    'updated_at'
-                ],
-            ]
-        ]);
-       
-
-    }
+    
 
 }
