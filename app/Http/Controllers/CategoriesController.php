@@ -36,6 +36,12 @@ class CategoriesController extends Controller
         $code = 0;
         $call_id = $request->get('call_id');
 
+        if(!is_numeric($amount)) {
+            $msg = "Bad input";
+            $return_response = ResponseObject::result($status, $msg, 'data', null, $code, $call_id);
+            return response()->json($return_response);
+        }
+
         if($amount == 0) {
             $data = DB::table('categories')
             ->get();
@@ -53,8 +59,6 @@ class CategoriesController extends Controller
 
         $return_response = ResponseObject::result($status, $msg, 'data', $data, $code, $call_id);
         return response()->json($return_response);
-
-        return response()->json($data);
     }
 
 }

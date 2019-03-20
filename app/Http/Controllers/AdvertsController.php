@@ -37,6 +37,12 @@ class AdvertsController extends Controller
         $code = 0;
         $call_id = $request->get('call_id');
 
+        if(!is_numeric($amount)) {
+            $msg = "Bad input";
+            $return_response = ResponseObject::result($status, $msg, 'data', null, $code, $call_id);
+            return response()->json($return_response);
+        }
+
         if($amount == 0) {
             $data = DB::table('adverts')
             ->get();
@@ -66,6 +72,14 @@ class AdvertsController extends Controller
         $msg = "Request failed";
         $code = 0;
         $call_id = $request->get('call_id');
+
+        $bool_options = ["true", "false"];
+
+        if(!is_numeric($user_id) || !in_array(strtolower($latest), $bool_options)) {
+            $msg = "Bad input";
+            $return_response = ResponseObject::result($status, $msg, 'data', null, $code, $call_id);
+            return response()->json($return_response);
+        }
 
         if($latest) {
             $data = DB::table('adverts')

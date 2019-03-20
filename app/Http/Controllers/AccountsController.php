@@ -40,6 +40,11 @@ class AccountsController extends Controller
         $code = 0;
         $call_id = $request->get('call_id');
 
+        if(!is_numeric($user_id)) {
+            $msg = "Bad input";
+            $return_response = ResponseObject::result($status, $msg, 'data', null, $code, $call_id);
+            return response()->json($return_response);
+        }
 
         $data = DB::table('users')
                 ->where('id', $user_id)
