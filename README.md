@@ -2,6 +2,11 @@
 
 Code Test
 
+Get Started
+
+- setup env file
+- Run Migrations and Seeds
+
 API Keys For use
 
 - fhfdhdthbcfbxdfbcxghfd : Active -> Max: 10 calls per minute
