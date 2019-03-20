@@ -18,7 +18,11 @@ class CreateApiTable extends Migration
             $table->string('api_key', 255);
             $table->string('name', 100);
             $table->boolean('active');
-            $table->timestamps();
+            $table->integer('calls_per_minute');
+            $table->integer('total_calls_per_minute');
+            $table->integer('time_of_last_call');
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('modified')->useCurrent();
         });
     }
 

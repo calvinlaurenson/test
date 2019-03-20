@@ -18,7 +18,8 @@ class CreateCallLog extends Migration
             $table->text('inputs');
             $table->integer('api_id');
             $table->string('call_id');
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('modified')->useCurrent();
         });
     }
 

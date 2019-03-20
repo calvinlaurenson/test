@@ -39,7 +39,6 @@ class APITest extends TestCase
                     'category',
                     'user_id',
                     'created_at',
-                    'updated_at'
                 ]
             ]
         ]);
@@ -65,7 +64,6 @@ class APITest extends TestCase
                     'id',
                     'name',
                     'created_at',
-                    'updated_at'
                 ]
             ]
         ]);
@@ -91,7 +89,6 @@ class APITest extends TestCase
                     'username',
                     'email',
                     'created_at',
-                    'updated_at'
                 ]
             ]
         ]);

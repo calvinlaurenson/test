@@ -1,0 +1,1 @@
+C:37:"PHPUnit\Runner\DefaultTestResultCache":294:{a:2:{s:7:"defects";a:3:{s:22:"APITest::getAllAdverts";i:3;s:25:"APITest::getAllCategories";i:4;s:19:"APITest::getAccount";i:4;}s:5:"times";a:4:{s:18:"APITest::basicTest";d:0.022;s:22:"APITest::getAllAdverts";d:0.049;s:25:"APITest::getAllCategories";d:0.018;s:19:"APITest::getAccount";d:0.018;}}}

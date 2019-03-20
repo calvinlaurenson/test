@@ -81,21 +81,21 @@ class AdvertsController extends Controller
             return response()->json($return_response);
         }
 
-        if($latest) {
-            $data = DB::table('adverts')
-                ->where('user_id', $user_id)
-                ->orderby('id', 'desc')
-                ->first();
-        } else {
+        if($latest == "true") {
             $data = DB::table('adverts')
                 ->where('user_id', $user_id)
                 ->orderby('id', 'desc')
                 ->get();
+        } else {
+            $data = DB::table('adverts')
+                ->where('user_id', $user_id)
+                ->orderby('id', 'desc')
+                ->first();
         }
         
         if(!empty($data)) {
             $status = true;
-            $msg = "Request success";
+            $msg = "Request success" . $latest;
             $code = 1;
         }
 

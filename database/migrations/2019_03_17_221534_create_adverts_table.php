@@ -20,7 +20,8 @@ class CreateAdvertsTable extends Migration
             $table->decimal('price', 8, 2);
             $table->integer('category');
             $table->integer('user_id');
-            $table->timestamps();
+            $table->dateTime('created_at')->useCurrent();
+            $table->dateTime('modified')->useCurrent();
         });
     }
 
